@@ -19,7 +19,6 @@ function App() {
                 </header>
                 <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/about" element={<About />} />
                   <Route path="/weather" element={<Weather />}></Route>
                 </Routes>
               </Router>

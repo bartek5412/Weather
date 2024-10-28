@@ -47,6 +47,8 @@ function CurrentWeather() {
   const [showWindSpeed, setShowWindSpeed] = useState<boolean>(false);
   const [showPressure, setShowPressure] = useState<boolean>(false);
   const currentHour = new Date().getHours();
+  const currentMinutes = new Date().getMinutes();
+  const currentSeconds = new Date().getSeconds();
 
   const handleCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCity = event.target.value;
@@ -87,64 +89,68 @@ function CurrentWeather() {
 
   return (
     <>
-      <div className="p-8 bg-gray-200 basis-1/4 shadow-xl rounded-lg flex items-center">
-        <div className="p-4 basis-1/8">
-          <h3 className="text-l font-bold">Dodatkowe parametry:</h3>
-          <label className="p-2">
-            <ul>
-              <li className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={showRain}
-                  onClick={() => setShowRain(!showRain)}
-                  className="mr-2"
-                />
-                Opady
-              </li>
-              <li className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={showVisibility}
-                  onClick={() => setShowVisibility(!showVisibility)}
-                  className="mr-2"
-                />
-                Widoczność
-              </li>
-              <li className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={showWindSpeed}
-                  onClick={() => setShowWindSpeed(!showWindSpeed)}
-                  className="mr-2"
-                />
-                Prędkość wiatru
-              </li>
-              <li className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={showPressure}
-                  onClick={() => setShowPressure(!showPressure)}
-                  className="mr-2"
-                />
-                Ciśnienie
-              </li>
-            </ul>
-          </label>
+      <div className="p-8 bg-gray-200 flex flex-col md:flex-row shadow-xl rounded-lg space-x-4">
+        <div className="p-4 flex-1">
+          <h3 className="text-lg font-bold">Dodatkowe parametry:</h3>
+          <ul className="space-y-2 mt-2">
+            <li className="flex items-center">
+              <input
+                type="checkbox"
+                checked={showRain}
+                onClick={() => setShowRain(!showRain)}
+                className="mr-2"
+              />
+              Opady
+            </li>
+            <li className="flex items-center">
+              <input
+                type="checkbox"
+                checked={showVisibility}
+                onClick={() => setShowVisibility(!showVisibility)}
+                className="mr-2"
+              />
+              Widoczność
+            </li>
+            <li className="flex items-center">
+              <input
+                type="checkbox"
+                checked={showWindSpeed}
+                onClick={() => setShowWindSpeed(!showWindSpeed)}
+                className="mr-2"
+              />
+              Prędkość wiatru
+            </li>
+            <li className="flex items-center">
+              <input
+                type="checkbox"
+                checked={showPressure}
+                onClick={() => setShowPressure(!showPressure)}
+                className="mr-2"
+              />
+              Ciśnienie
+            </li>
+          </ul>
         </div>
-        <div className="p-4 basis-3/4">
-          <h2 className="text-xl font-bold items-center">Wybierz miasto:</h2>
+        <div className="p-4 flex-1">
+          <h2 className="text-xl font-bold">Wybierz miasto:</h2>
           <select
             value={city}
             onChange={handleCityChange}
-            className="p-2 border rounded"
+            className="p-2 border rounded mt-2 w-full"
           >
             <option value="Poznań">Poznań</option>
             <option value="Wrocław">Wrocław</option>
             <option value="Warszawa">Warszawa</option>
           </select>
         </div>
+        <div className="p-4 flex-1">
+          <h3 className="text-lg font-bold">Aktualna godzina:</h3>
+          <p className="text-black bg-gray-300 p-2 rounded">
+            {currentHour}:{currentMinutes}:{currentSeconds}
+          </p>
+        </div>
       </div>
-      <div className="p-8 bg-gray-200 basis-1/4 shadow-xl rounded-lg flex flex-col items-center">
+      <div className="p-8 bg-gray-200 shadow-xl rounded-lg flex flex-col items-center">
         <h2 className="text-xl font-bold">
           Aktualna prognoza pogody dla {city}
         </h2>
@@ -156,7 +162,7 @@ function CurrentWeather() {
         {showRain && (
           <div className="text-lg my-2 text-center">
             <h3 className="font-semibold">Opady:</h3>
-            <p className="text-black bg-gray-400 p-2 rounded ite">
+            <p className="text-black bg-gray-400 p-2 rounded">
               {currentRain !== undefined ? `${currentRain} mm` : "Brak danych"}
             </p>
           </div>
@@ -164,7 +170,7 @@ function CurrentWeather() {
         {showVisibility && (
           <div className="text-lg my-2 text-center">
             <h3 className="font-semibold">Widoczność:</h3>
-            <p className="text-black bg-gray-400 p-2 rounded ite">
+            <p className="text-black bg-gray-400 p-2 rounded">
               {currentVisibility !== undefined
                 ? `${currentVisibility} m`
                 : "Brak danych"}
@@ -174,7 +180,7 @@ function CurrentWeather() {
         {showWindSpeed && (
           <div className="text-lg my-2 text-center">
             <h3 className="font-semibold">Prędkość wiatru:</h3>
-            <p className="text-black bg-gray-400 p-2 rounded ite">
+            <p className="text-black bg-gray-400 p-2 rounded">
               {currentWindSpeed !== undefined
                 ? `${currentWindSpeed} m/s`
                 : "Brak danych"}
@@ -184,7 +190,7 @@ function CurrentWeather() {
         {showPressure && (
           <div className="text-lg my-2 text-center">
             <h3 className="font-semibold">Ciśnienie:</h3>
-            <p className="text-black bg-gray-400 p-2 rounded ite">
+            <p className="text-black bg-gray-400 p-2 rounded">
               {currentPressure !== undefined
                 ? `${currentPressure} hPa`
                 : "Brak danych"}
