@@ -17,6 +17,9 @@ const Navbar: React.FC = () => {
           <Link to="/about" className="text-white hover:text-blue-200 mx-4">
             About
           </Link>
+          <Link to="/weather" className="text-white hover:text-blue-200 mx-4">
+            Weather
+          </Link>
         </div>
         <div className="basis-1/8 ">
           {isLoggedIn ? (
