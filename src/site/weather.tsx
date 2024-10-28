@@ -9,6 +9,10 @@ import { useState } from "react";
 interface WeatherData {
   hourly: {
     temperature_2m: number[];
+    rain: number[];
+    windspeed_10m: number[];
+    visibility: number[];
+    pressure_msl: number[];
   };
 }
 
@@ -19,7 +23,13 @@ export const fetchWeather = async (latitude: number, longitude: number) => {
       params: {
         latitude,
         longitude,
-        hourly: ["temperature_2m", "rain"],
+        hourly: [
+          "temperature_2m",
+          "rain",
+          "windspeed_10m",
+          "visibility",
+          "pressure_msl",
+        ],
       },
     }
   );
@@ -32,7 +42,12 @@ function CurrentWeather() {
   const [latitude, setlatitude] = useState<number>(52.4069);
   const [longitude, setLongitude] = useState<number>(16.9299);
   const [city, setCity] = useState<string>("Poznań");
+  const [showRain, setShowRain] = useState<boolean>(false);
+  const [showVisibility, setShowVisibility] = useState<boolean>(false);
+  const [showWindSpeed, setShowWindSpeed] = useState<boolean>(false);
+  const [showPressure, setShowPressure] = useState<boolean>(false);
   const currentHour = new Date().getHours();
+
   const handleCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCity = event.target.value;
     setCity(selectedCity);
@@ -54,26 +69,81 @@ function CurrentWeather() {
         break;
     }
   };
+
   const { data, error, isLoading } = useQuery<WeatherData, Error>({
     queryKey: ["weather", latitude, longitude],
     queryFn: () => fetchWeather(latitude, longitude),
     refetchInterval: 1000,
   });
-  if (isLoading) return <p>Ładowanie danych</p>;
+
+  if (isLoading) return <p>Ładowanie danych...</p>;
   if (error) return <p>Błąd: {error.message}</p>;
+
   const currentTemperature = data?.hourly.temperature_2m[currentHour];
+  const currentRain = data?.hourly.rain[currentHour];
+  const currentWindSpeed = data?.hourly.windspeed_10m[currentHour];
+  const currentVisibility = data?.hourly.visibility[currentHour];
+  const currentPressure = data?.hourly.pressure_msl[currentHour];
 
   return (
     <>
-      {" "}
-      <div className="p-8 bg-gray-200 basis-1/4 shadow-xl rounded-lg flex flex-col items-center">
-        <h2 className="text-xl font-bold">Wybierz miasto:</h2>
-        <select value={city} onChange={handleCityChange}>
-          <option value="Poznań">Poznań</option>
-          <option value="Wrocław">Wrocław</option>
-          <option value="Warszawa">Warszawa</option>
-        </select>
-      </div>{" "}
+      <div className="p-8 bg-gray-200 basis-1/4 shadow-xl rounded-lg flex items-center">
+        <div className="p-4 basis-1/8">
+          <h3 className="text-l font-bold">Dodatkowe parametry:</h3>
+          <label className="p-2">
+            <ul>
+              <li className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={showRain}
+                  onClick={() => setShowRain(!showRain)}
+                  className="mr-2"
+                />
+                Opady
+              </li>
+              <li className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={showVisibility}
+                  onClick={() => setShowVisibility(!showVisibility)}
+                  className="mr-2"
+                />
+                Widoczność
+              </li>
+              <li className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={showWindSpeed}
+                  onClick={() => setShowWindSpeed(!showWindSpeed)}
+                  className="mr-2"
+                />
+                Prędkość wiatru
+              </li>
+              <li className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={showPressure}
+                  onClick={() => setShowPressure(!showPressure)}
+                  className="mr-2"
+                />
+                Ciśnienie
+              </li>
+            </ul>
+          </label>
+        </div>
+        <div className="p-4 basis-3/4">
+          <h2 className="text-xl font-bold items-center">Wybierz miasto:</h2>
+          <select
+            value={city}
+            onChange={handleCityChange}
+            className="p-2 border rounded"
+          >
+            <option value="Poznań">Poznań</option>
+            <option value="Wrocław">Wrocław</option>
+            <option value="Warszawa">Warszawa</option>
+          </select>
+        </div>
+      </div>
       <div className="p-8 bg-gray-200 basis-1/4 shadow-xl rounded-lg flex flex-col items-center">
         <h2 className="text-xl font-bold">
           Aktualna prognoza pogody dla {city}
@@ -83,6 +153,44 @@ function CurrentWeather() {
             ? `${currentTemperature}°C`
             : "Brak danych"}
         </div>
+        {showRain && (
+          <div className="text-lg my-2 text-center">
+            <h3 className="font-semibold">Opady:</h3>
+            <p className="text-black bg-gray-400 p-2 rounded ite">
+              {currentRain !== undefined ? `${currentRain} mm` : "Brak danych"}
+            </p>
+          </div>
+        )}
+        {showVisibility && (
+          <div className="text-lg my-2 text-center">
+            <h3 className="font-semibold">Widoczność:</h3>
+            <p className="text-black bg-gray-400 p-2 rounded ite">
+              {currentVisibility !== undefined
+                ? `${currentVisibility} m`
+                : "Brak danych"}
+            </p>
+          </div>
+        )}
+        {showWindSpeed && (
+          <div className="text-lg my-2 text-center">
+            <h3 className="font-semibold">Prędkość wiatru:</h3>
+            <p className="text-black bg-gray-400 p-2 rounded ite">
+              {currentWindSpeed !== undefined
+                ? `${currentWindSpeed} m/s`
+                : "Brak danych"}
+            </p>
+          </div>
+        )}
+        {showPressure && (
+          <div className="text-lg my-2 text-center">
+            <h3 className="font-semibold">Ciśnienie:</h3>
+            <p className="text-black bg-gray-400 p-2 rounded ite">
+              {currentPressure !== undefined
+                ? `${currentPressure} hPa`
+                : "Brak danych"}
+            </p>
+          </div>
+        )}
       </div>
     </>
   );
