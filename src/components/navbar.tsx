@@ -20,6 +20,9 @@ const Navbar: React.FC = () => {
           <Link to="/map" className="text-white hover:text-blue-200 mx-4">
             Map
           </Link>
+          <Link to="/posts" className="text-white hover:text-blue-200 mx-4">
+            Posts
+          </Link>
         </div>
         <div className="basis-1/8 ">
           {isLoggedIn ? (

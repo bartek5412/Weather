@@ -6,27 +6,44 @@ import "./App.css";
 import { UserProvider } from "./context/UserContext";
 import Map from "./site/map";
 import Weather from "./site/weather";
+import PostList from "./components/PostList";
+import PostDetails from "./components/PostDetails";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PostProvider } from "./context/PostContext";
+
+const queryClient = new QueryClient();
+
 function App() {
   return (
     <>
-      <div>
-        <UserProvider>
+      <QueryClientProvider client={queryClient}>
+        <PostProvider>
+          {" "}
           <div>
-            <div>
-              <Router>
-                <header>
-                  <Navbar />
-                </header>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/weather" element={<Weather />}></Route>
-                  <Route path="/map" element={<Map />}></Route>
-                </Routes>
-              </Router>
-            </div>
+            <UserProvider>
+              <div>
+                <div>
+                  <Router>
+                    <header>
+                      <Navbar />
+                    </header>
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/weather" element={<Weather />}></Route>
+                      <Route path="/map" element={<Map />}></Route>
+                      <Route path="/posts" element={<PostList />}></Route>
+                      <Route
+                        path="/posts/:id"
+                        element={<PostDetails />}
+                      ></Route>
+                    </Routes>
+                  </Router>
+                </div>
+              </div>
+            </UserProvider>
           </div>
-        </UserProvider>
-      </div>
+        </PostProvider>
+      </QueryClientProvider>
     </>
   );
 }
