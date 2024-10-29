@@ -63,10 +63,87 @@ function CurrentWeather() {
         setlatitude(51.1079);
         setLongitude(17.0385);
         break;
-      case "Warszawa":
+      case "Berlin":
+        setlatitude(52.52);
+        setLongitude(13.405);
+        break;
+      case "Warsaw":
         setlatitude(52.2297);
         setLongitude(21.0122);
         break;
+      case "Paris":
+        setlatitude(48.8566);
+        setLongitude(2.3522);
+        break;
+      case "London":
+        setlatitude(51.5074);
+        setLongitude(-0.1278);
+        break;
+      case "Madrid":
+        setlatitude(40.4168);
+        setLongitude(-3.7038);
+        break;
+      case "Rome":
+        setlatitude(41.9028);
+        setLongitude(12.4964);
+        break;
+      case "Vienna":
+        setlatitude(48.2082);
+        setLongitude(16.3738);
+        break;
+      case "Amsterdam":
+        setlatitude(52.3676);
+        setLongitude(4.9041);
+        break;
+      case "Prague":
+        setlatitude(50.0755);
+        setLongitude(14.4378);
+        break;
+      case "Budapest":
+        setlatitude(47.4979);
+        setLongitude(19.0402);
+        break;
+      case "Lisbon":
+        setlatitude(38.7169);
+        setLongitude(-9.1399);
+        break;
+      case "Athens":
+        setlatitude(37.9838);
+        setLongitude(23.7275);
+        break;
+      case "Brussels":
+        setlatitude(50.8503);
+        setLongitude(4.3517);
+        break;
+      case "Copenhagen":
+        setlatitude(55.6761);
+        setLongitude(12.5683);
+        break;
+      case "Dublin":
+        setlatitude(53.3498);
+        setLongitude(-6.2603);
+        break;
+      case "Oslo":
+        setlatitude(59.9139);
+        setLongitude(10.7522);
+        break;
+      case "Stockholm":
+        setlatitude(59.3293);
+        setLongitude(18.0686);
+        break;
+      case "Helsinki":
+        setlatitude(60.1699);
+        setLongitude(24.9384);
+        break;
+      case "Zurich":
+        setlatitude(47.3769);
+        setLongitude(8.5417);
+        break;
+      case "Moscow":
+        setlatitude(55.7558);
+        setLongitude(37.6176);
+        break;
+
       default:
         break;
     }
@@ -90,7 +167,7 @@ function CurrentWeather() {
   return (
     <>
       <div className="p-8 bg-gray-200 flex flex-col md:flex-row shadow-xl rounded-lg space-x-4">
-        <div className="p-4 flex-1">
+        <div className="p-4 flex-initial w-1/5">
           <h3 className="text-lg font-bold">Dodatkowe parametry:</h3>
           <ul className="space-y-2 mt-2">
             <li className="flex items-center">
@@ -131,21 +208,41 @@ function CurrentWeather() {
             </li>
           </ul>
         </div>
-        <div className="p-4 flex-1">
-          <h2 className="text-xl font-bold">Wybierz miasto:</h2>
+        <div className="p-4 flex-1  w-3/5">
+          <h2 className="text-xl font-bold text-center">Wybierz miasto:</h2>
           <select
             value={city}
             onChange={handleCityChange}
-            className="p-2 border rounded mt-2 w-full"
+            className="p-2 border rounded mt-2 w-auto text-center mx-auto"
           >
             <option value="Poznań">Poznań</option>
             <option value="Wrocław">Wrocław</option>
-            <option value="Warszawa">Warszawa</option>
+            <option value="Poznań">Poznań</option>
+            <option value="Berlin">Berlin</option>
+            <option value="Warsaw">Warsaw</option>
+            <option value="Paris">Paris</option>
+            <option value="London">London</option>
+            <option value="Madrid">Madrid</option>
+            <option value="Rome">Rome</option>
+            <option value="Vienna">Vienna</option>
+            <option value="Amsterdam">Amsterdam</option>
+            <option value="Prague">Prague</option>
+            <option value="Budapest">Budapest</option>
+            <option value="Lisbon">Lisbon</option>
+            <option value="Athens">Athens</option>
+            <option value="Brussels">Brussels</option>
+            <option value="Copenhagen">Copenhagen</option>
+            <option value="Dublin">Dublin</option>
+            <option value="Oslo">Oslo</option>
+            <option value="Stockholm">Stockholm</option>
+            <option value="Helsinki">Helsinki</option>
+            <option value="Zurich">Zurich</option>
+            <option value="Moscow">Moscow</option>
           </select>
         </div>
-        <div className="p-4 flex-1">
+        <div className="p-4 flex-initial">
           <h3 className="text-lg font-bold">Aktualna godzina:</h3>
-          <p className="text-black bg-gray-300 p-2 rounded">
+          <p className="text-black bg-gray-300 p-2 rounded w-1/5">
             {currentHour}:{currentMinutes}:{currentSeconds}
           </p>
         </div>
