@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
             Weather
           </Link>
           <Link to="/map" className="text-white hover:text-blue-200 mx-4">
-            Map
+            Users
           </Link>
           <Link to="/posts" className="text-white hover:text-blue-200 mx-4">
             Posts

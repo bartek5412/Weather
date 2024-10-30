@@ -11,7 +11,14 @@ import PostDetails from "./components/PostDetails";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PostProvider } from "./context/PostContext";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 function App() {
   return (
